@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V1.0.1__Create_employee_table.sql" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V1.0.3__Create_foreign_key.sql" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V1__Create_deparment_table.sql" dialect="GenericSQL" />
-  </component>
-</project>

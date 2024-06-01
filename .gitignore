@@ -14,7 +14,7 @@ target/
 **/.idea/**/dictionaries
 **/.idea/**/shelf
 **/.idea/**/aws.xml
-
+**/.idea/
 *.iws
 *.iml
 *.ipr
