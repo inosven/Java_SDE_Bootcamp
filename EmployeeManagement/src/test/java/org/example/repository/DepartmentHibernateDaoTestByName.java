@@ -8,16 +8,15 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class DepartmentHibernateDaoTest {
+public class DepartmentHibernateDaoTestByName {
     private final DepartmentHibernateDao departmentHibernateDaoTest = new DepartmentHibernateDao();
 
-    @Test
-    public void getDepartmentHibernateTest() throws SQLException {
+@Test
+    public void getDepartmentsByNameTest() throws SQLException {
 
         List<Department> departments = departmentHibernateDaoTest.getDepartments();
 
 
         assertEquals(0, departments.size());
     }
-
 }

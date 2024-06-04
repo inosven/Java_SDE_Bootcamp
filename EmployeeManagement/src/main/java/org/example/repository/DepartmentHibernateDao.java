@@ -33,4 +33,22 @@ public class DepartmentHibernateDao implements DepartmentDao {
         logger.info("Get departments {}", departments);
         return departments;
     }
+
+    public List<Department> getDepartmentsByName(String departmentName) throws SQLException {
+        logger.info("Start to getDepartments from Postgres by Name via Hibernate.");
+        List<Department> departments;
+        Session session = sessionFactory.openSession();
+        try {
+            String hibernageSql = "from Department as department where department.name = :departmentName";
+            Query query = session.createQuery(hibernageSql);
+            departments = query.list();
+            session.close();
+        } catch (HibernateException e) {
+            logger.error("Open session exception or close session exception",e);
+            throw e;
+        }
+        logger.info("Get departments {}", departments);
+        return departments;
+
+    }
 }
