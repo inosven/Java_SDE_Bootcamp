@@ -2,13 +2,14 @@ package org.example.model;
 
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "departments")
 public class Department {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id //primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //generate id
     @Column(name = "id")
     private long id;
 
@@ -18,6 +19,10 @@ public class Department {
     private String description;
     @Column(name = "location")
     private String location;
+    @OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private Set<Employee> employees;
+
+
 
     public Department(long id, String name, String description, String location) {
         this.id = id;

@@ -24,7 +24,6 @@ public class DepartmentJDBCDao {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             String sql;
             sql = "SELECT * FROM departments";
-
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             logger.info("Connects to DB and execute the query");
