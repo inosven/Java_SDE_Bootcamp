@@ -9,10 +9,16 @@ public interface DepartmentDao {
 
     List<Department> getDepartments() throws SQLException;
 
-    void create(String name, String description, String location) throws SQLException;
+
+    //    void create(String name, String description, String location) throws SQLException;
+    void create(Department department) throws SQLException;
 
     Department getDepartmentsByName(String departmentName) throws SQLException;
-    Department create(Long id, String name, String description, String location) throws SQLException;
-    Department update(Long id, String name, String description, String location) throws SQLException;
-    void deleteByName(String name) throws SQLException;
+//    Department update(String name, String description, String location) throws SQLException;
+
+//    Department update(String oldName, String name, String description, String location) throws SQLException;
+
+    void delete(Department department) throws SQLException;
+
+    Department getDepartmentEagerBy(Long id) throws SQLException;
 }

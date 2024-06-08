@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.SQLException;
 import java.util.List;
 
+
 public class DepartmentHibernateDao implements DepartmentDao {
     private static final Logger logger = LoggerFactory.getLogger(DepartmentHibernateDao.class);
     private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -36,31 +37,33 @@ public class DepartmentHibernateDao implements DepartmentDao {
         return departments;
     }
 
-    @Override
-    public Department update(Long id, String name, String description, String location) throws SQLException {
-        logger.info("Start to update a record by id from Postgres via Hibernate.");
-        Department department;
-        Session session = sessionFactory.openSession();
-        try {
-            department = session.get(Department.class, id);
-            department.setName(name);
-            department.setDescription(description);
-            department.setLocation(location);
-        }catch (Exception e) {
-            logger.error("Error when delete a department record", e);
-            throw e;
-        }
-        return null;
-    }
+//    @Override
+//    public Department update(String oldName, String name, String description, String location) throws SQLException {
+//        logger.info("Start to update a record by id from Postgres via Hibernate.");
+//        Department department;
+//        Session session = sessionFactory.openSession();
+//        try {
+//            department = session.get(Department.class, oldName);
+//            department.setName(name);
+//            department.setDescription(description);
+//            department.setLocation(location);
+//        }catch (Exception e) {
+//            logger.error("Error when delete a department record", e);
+//            throw e;
+//        }
+//        return null;
+//    }
 
     @Override
-    public void deleteByName(String name) throws SQLException {
+    public void delete(Department department) throws SQLException {
         logger.info("Start to delete a record by id from Postgres via Hibernate.");
-        Department department;
         Session session = sessionFactory.openSession();
+        Transaction transaction = null;
         try {
-            department = session.get(Department.class, name);
+            transaction = session.beginTransaction();
             session.delete(department);
+            logger.info("Deleted a record by id from Postgres via Hibernate.");
+            transaction.commit();
             session.close();
         } catch (Exception e) {
             logger.error("Error when delete a department record", e);
@@ -69,12 +72,30 @@ public class DepartmentHibernateDao implements DepartmentDao {
     }
 
     @Override
-    public void create(String name, String description, String location) throws SQLException {
+    public Department getDepartmentEagerBy(Long id) {
+        Transaction transaction = null;
+
+        String hql = "FROM Department d LEFT JOIN FETCH d.employees where d.id = :Id";
+        Session session = sessionFactory.openSession();
+        try {
+            transaction.begin();
+            Query<Department> query = session.createQuery(hql);
+            query.setParameter("Id", id);
+            Department department = query.uniqueResult();
+            session.close();
+            logger.info("Get department by id using eager fetch from Postgres via Hibernate.");
+            transaction.commit();
+            return department;
+        } catch (HibernateException e) {
+            logger.error("failed to retrieve data record", e);
+            session.close();
+            return null;
+        }
+    }
+
+    @Override
+    public void create(Department department) throws SQLException {
         logger.info("Start to create a record from Postgres via Hibernate.");
-        Department department = new Department();
-        department.setName(name);
-        department.setDescription(description);
-        department.setLocation(location);
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try {
@@ -115,8 +136,7 @@ public class DepartmentHibernateDao implements DepartmentDao {
 
     }
 
-    @Override
-    public Department create(Long id, String name, String description, String location) throws SQLException {
-        return null;
-    }
+
+
 }
+
