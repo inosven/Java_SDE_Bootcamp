@@ -3,11 +3,12 @@ package org.example.repository;
 import org.example.model.Department;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Repository
 public class DepartmentJDBCDao {
     private static final String DB_URL="jdbc:postgresql://localhost:5431/training_db";
     private static final String USER="admin";

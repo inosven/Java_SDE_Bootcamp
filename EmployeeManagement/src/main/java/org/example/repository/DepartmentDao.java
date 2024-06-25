@@ -13,12 +13,14 @@ public interface DepartmentDao {
     //    void create(String name, String description, String location) throws SQLException;
     void create(Department department) throws SQLException;
 
+    Department update(Department department);
+
     Department getDepartmentsByName(String departmentName) throws SQLException;
 //    Department update(String name, String description, String location) throws SQLException;
-
-//    Department update(String oldName, String name, String description, String location) throws SQLException;
 
     void delete(Department department) throws SQLException;
 
     Department getDepartmentEagerBy(Long id) throws SQLException;
+
+    Department getDepartmentById(Long id);
 }

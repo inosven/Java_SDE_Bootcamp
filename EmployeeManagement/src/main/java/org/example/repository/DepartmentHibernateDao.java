@@ -9,14 +9,17 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.util.List;
 
-
+@Repository
 public class DepartmentHibernateDao implements DepartmentDao {
     private static final Logger logger = LoggerFactory.getLogger(DepartmentHibernateDao.class);
-    private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    @Autowired
+    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     @Override
     public List<Department> getDepartments() throws SQLException {
@@ -114,6 +117,26 @@ public class DepartmentHibernateDao implements DepartmentDao {
         logger.info("Save departments {}", department);
     }
 
+    @Override
+    public Department update(Department department) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(department);
+            transaction.commit();
+            Department d = getDepartmentById(department.getId());
+            session.close();
+            return d;
+        } catch (HibernateException e) {
+            if (transaction != null)
+                transaction.rollback();
+            logger.error("failed to insert record", e);
+            session.close();
+            return null;
+        }
+    }
+
     public Department getDepartmentsByName(String departmentName) throws SQLException {
         logger.info("Start to getDepartments from Postgres by Name via Hibernate.");
         List<Department> departments;
@@ -137,6 +160,35 @@ public class DepartmentHibernateDao implements DepartmentDao {
     }
 
 
+    @Override
+    public Department getDepartmentById(Long id) {
+        logger.info("Fetching department from database by ID: {}", id);
+        Department department = null;
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            department = session.get(Department.class, id);
+            if (department == null) {
+                logger.warn("No department found with ID: {}", id);
+            } else {
+                logger.info("Fetched department: {}", department);
+            }
+        } catch (HibernateException e) {
+            logger.error("Error retrieving department by ID: {}", id, e);
+            throw e; // You may handle or wrap this exception as needed
+        } finally {
+            if (session != null) {
+                try {
+                    session.close();
+                } catch (HibernateException e) {
+                    logger.error("Error closing session", e);
+                }
+            }
+        }
+        return department;
+    }
 
 }
+
+
 
