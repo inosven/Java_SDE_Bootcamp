@@ -2,9 +2,11 @@ package org.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
 
 @SpringBootApplication(scanBasePackages = "org.example")
+@ServletComponentScan(basePackages = {"org.ascending.training.filter"})
 public class ApplicationBootstrap
 {
     public static void main( String[] args )
