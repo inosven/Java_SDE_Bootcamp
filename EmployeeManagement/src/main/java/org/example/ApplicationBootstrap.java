@@ -6,7 +6,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 
 
 @SpringBootApplication(scanBasePackages = "org.example")
-@ServletComponentScan(basePackages = {"org.ascending.training.filter"})
+@ServletComponentScan(basePackages = {"org.example.filter"})
 public class ApplicationBootstrap
 {
     public static void main( String[] args )

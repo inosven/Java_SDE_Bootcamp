@@ -18,8 +18,9 @@ import java.util.List;
 @Repository
 public class DepartmentHibernateDao implements DepartmentDao {
     private static final Logger logger = LoggerFactory.getLogger(DepartmentHibernateDao.class);
+
     @Autowired
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private SessionFactory sessionFactory;
 
     @Override
     public List<Department> getDepartments() throws SQLException {

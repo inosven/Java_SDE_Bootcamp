@@ -19,7 +19,7 @@ import java.util.List;
 public class EmployeeHibernateDao implements EmployeeDao {
     private static final Logger logger = LoggerFactory.getLogger(EmployeeHibernateDao.class);
     @Autowired
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private SessionFactory sessionFactory;
 @Override
     public List<Employee> getEmployees(){
     logger.info("Start to getEmployees from Postgres via Hibernate.");
