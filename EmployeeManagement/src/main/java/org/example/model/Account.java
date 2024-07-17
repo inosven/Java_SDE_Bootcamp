@@ -1,11 +1,12 @@
 package org.example.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Date;
+
 @Entity
-@Table(name="accounts")
+@Table(name ="accounts")
 public class Account {
     @Id
     @Column(name = "id")
@@ -14,6 +15,8 @@ public class Account {
     private String accountType;
     @Column(name = "balance")
     private BigDecimal balance;
+//    @Column(name = "create_date")
+//    private Date createDate;
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;

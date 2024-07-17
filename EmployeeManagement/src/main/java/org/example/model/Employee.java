@@ -3,6 +3,7 @@ package org.example.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.Set;
 
 @Entity
@@ -64,6 +65,14 @@ public class Employee {
         this.department = department;
     }
 
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
+    }
+
     @Id
     @Column(name = "id")
     private long id;
@@ -77,6 +86,8 @@ public class Employee {
     private String email;
     @Column(name = "address")
     private String address;
+//    @Column(name = "hire_date")
+//    private Date hireDate;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;

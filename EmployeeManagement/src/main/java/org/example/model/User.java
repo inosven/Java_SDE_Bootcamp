@@ -1,10 +1,9 @@
 package org.example.model;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.*;
-
 import java.util.List;
 
 @Entity

@@ -10,12 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-
+@WebFilter(filterName = "securityFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST})
 public class SecurityFitler implements Filter {
     private Logger logger = LoggerFactory.getLogger(LogFilter.class);
     private static final Set<String> IGNORED_PATH = new HashSet<String>(Arrays.asList("/auth"));
@@ -59,7 +60,11 @@ public class SecurityFitler implements Filter {
 
 
         try {
+            logger.info("Start to try authorization");
+
             String token = req.getHeader("Authorization").replaceAll("^(.*?)", "");
+            logger.info("token is {}", token);
+
             if (token.isEmpty())
                 return statusCode;
 
@@ -103,6 +108,7 @@ public class SecurityFitler implements Filter {
         } catch (Exception e) {
             logger.error("Cannot get token");
         }
+        logger.info("successful authorization, {}", statusCode);
         return statusCode;
     }
 }
