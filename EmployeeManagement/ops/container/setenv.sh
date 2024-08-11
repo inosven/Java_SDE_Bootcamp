@@ -18,8 +18,6 @@
 #export JAVA_OPTS="$JAVA_OPTS -Dserver.port=8080"
 #export JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=dev"
 #export JAVA_OPTS="$JAVA_OPTS -Djwt.secret.key=my_key"
-#export JAVA_OPTS="$JAVA_OPTS -Daws.accessKeyId=AKIAZI2LCSOZMSVDO3OU"
-#export JAVA_OPTS="$JAVA_OPTS -Daws.secretKey=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"
 
 
 
